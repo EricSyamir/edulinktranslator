@@ -66,21 +66,32 @@ export default function TranslationPage() {
     }
   }, [sourceLang]);
 
-  const toggleRecording = () => {
+  const toggleRecording = async () => {
     if (!recognition) {
       toast.error("Voice input is not supported in this browser.");
       return;
     }
 
-    if (isRecording) {
-      recognition.stop();
-    } else {
-      try {
+    try {
+      if (!isRecording) {
+        // Request microphone access explicitly so the browser shows a permission prompt
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          // Immediately stop the stream – we only needed it to trigger permission
+          stream.getTracks().forEach(track => track.stop());
+        }
+      }
+
+      if (isRecording) {
+        recognition.stop();
+      } else {
         recognition.start();
         setIsRecording(true);
-      } catch {
-        toast.error("Could not start microphone");
       }
+    } catch (err) {
+      console.error(err);
+      toast.error("Microphone access was blocked or failed.");
+      setIsRecording(false);
     }
   };
 
