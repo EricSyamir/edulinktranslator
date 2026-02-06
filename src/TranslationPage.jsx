@@ -26,7 +26,7 @@ export default function TranslationPage() {
   const [targetLang, setTargetLang] = useState("ms");
   const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
+  const [recognition, setRecognition] = useState(null);
 
   useEffect(() => {
     if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
@@ -47,7 +47,7 @@ export default function TranslationPage() {
           ? "ta-MY"
           : "en-US";
 
-      recognitionInstance.onresult = (event: SpeechRecognitionEvent) => {
+      recognitionInstance.onresult = event => {
         const transcript = event.results[0][0].transcript;
         setInputText(prev => (prev ? `${prev} ${transcript}` : transcript));
         setIsRecording(false);
@@ -108,7 +108,7 @@ export default function TranslationPage() {
 
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(outputText);
-      const langMap: Record<string, string> = {
+      const langMap = {
         ms: "ms-MY",
         en: "en-US",
         zh: "zh-CN",
@@ -138,7 +138,7 @@ export default function TranslationPage() {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = e => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleTranslate();
