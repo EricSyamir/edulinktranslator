@@ -8,8 +8,17 @@ export default function App() {
       <header className="border-b border-blue-100 bg-white/90 backdrop-blur">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-semibold shadow-sm">
-              EL
+            <div className="flex items-center gap-2">
+              <img
+                src="/photo_2026-01-27_00-12-15.jpg"
+                alt="Edulink"
+                className="h-10 w-10 rounded-lg object-cover shadow-sm"
+              />
+              <img
+                src="/logosekolah.png"
+                alt="School"
+                className="h-10 w-10 rounded-lg object-contain shadow-sm"
+              />
             </div>
             <div>
               <p className="text-sm font-semibold text-slate-900">
